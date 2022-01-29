@@ -1,5 +1,5 @@
 import axios, { AxiosPromise } from "axios";
-import { PeopleModel } from "store/people";
+import { PeopleModel } from "rematch-store/people";
 
 const axiosInstance = axios.create({
   baseURL: "https://swapi.dev/api/",

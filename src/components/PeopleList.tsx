@@ -1,8 +1,5 @@
-import { useAppDispatch, useAppSelector } from "store";
-import { useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Table, Pagination, Space, Row } from "antd";
-import Error from "components/Error";
 
 const columns = [
   {
@@ -29,42 +26,37 @@ const columns = [
   },
 ];
 
-export default function PeopleList() {
-  const dispatch = useAppDispatch();
-  const pageId = Number(useParams().pageId) || 1;
-  const navigate = useNavigate();
-  console.log(`debug pageId: `, pageId);
-  const { loading, error } = useAppSelector(
-    (state) => state.loading.models.people
-  );
-
-  const { list, count } = useAppSelector((state) => state.people);
-
-  useEffect(() => {
-    if (pageId) dispatch.people.getPeople(pageId);
-  }, [dispatch, pageId]);
-
-  if (error) return <Error />;
-
+type IProps = {
+  list: any[];
+  total: number;
+  pageId: number;
+  loading: boolean;
+  handleNavigate: (x: number) => void;
+};
+export default function PeopleList({
+  list = [],
+  loading,
+  pageId,
+  total,
+  handleNavigate,
+}: IProps) {
   return (
     <Row justify={"center"}>
       <Space direction="vertical" size="large">
         <Table
           rowKey={(record) => record.url.replace(/\D/g, "")}
           columns={columns}
-          dataSource={error ? [] : list}
+          dataSource={list}
           pagination={false}
           loading={loading}
         />
         <Pagination
           current={Number(pageId) || 0}
-          onChange={(page) => navigate(`/people/${page}`)}
-          total={count}
+          onChange={handleNavigate}
+          total={total}
           showSizeChanger={false}
         />
       </Space>
     </Row>
   );
 }
-
-Number(undefined);

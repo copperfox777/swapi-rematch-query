@@ -26,7 +26,9 @@ export default function HomePage() {
           Загрузка данных отдельного персонажа реализована с помощью
           react-query. Кэширование из коробки, при повторном входе запроса нет
         </p>
-        <Link to={"/people/1"}>Посмотреть</Link>
+
+        <Link to={"/people/1"}>Посмотреть</Link> <br/>
+        <Link to={"/rtk"}>RTK</Link>
       </Col>
     </Row>
   );
